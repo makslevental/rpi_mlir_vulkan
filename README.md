@@ -66,3 +66,19 @@ Unranked Memref base@ = 0xaaaadaf7e630 rank = 2 offset = 0 sizes = [4, 4] stride
 ```
 
 then your drivers aren't driving; check `vulkaninfo` under `Presentable Surfaces`.
+
+# Gotchas
+
+If you get a segfault and after `lldb`ing you get
+
+```shell
+Opening /dev/dri/renderD128 failed: Permission denied
+```
+
+then you need to 
+
+```shell
+$ ls -l /dev/dri/renderD128
+crw-rw----+ 1 root render 226, 128 Aug  9  2022 /dev/dri/renderD128
+$ sudo usermod -aG render $(whoami)
+```
